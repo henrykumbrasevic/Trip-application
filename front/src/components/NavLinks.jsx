@@ -7,7 +7,7 @@ const NavLinks = () => {
 
   return (
     <>
-      <nav className="flex justify-around items-center bg-green-500 text-red-500">
+      <nav className="flex justify-around items-center bg-slate-600 text-white fixed w-full">
         <div>
           <Link to="/">
             <Button buttonType={"navlinks"}>Home</Button>
@@ -32,7 +32,7 @@ const NavLinks = () => {
           {user ? (
             <>
               <div className="flex items-center font-bold">
-                <p>welcome {user.username}!</p>
+                <p className="pr-5">You are logged in as {user.username}!</p>
                 <Link to="/">
                   <Button buttonType={"navlinks"} onClick={logout}>
                     Log out
