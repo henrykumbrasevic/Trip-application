@@ -9,6 +9,7 @@ import Footer from "./components/Footer.jsx";
 import ItemsPage from "./pages/ItemsPage.jsx";
 import MyTripsPage from "./pages/MyTripsPage.jsx";
 import RegistrationApproval from "./pages/RegistrationApproval.jsx";
+import TripRegistrationPage from "./pages/TripRegistrationPage.jsx";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/my-trips" element={<MyTripsPage />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/registration-approval" element={<RegistrationApproval/>} />
+            <Route path="/trips/:id" element={<TripRegistrationPage />} />
           </Routes>
         </div>
         <Footer />

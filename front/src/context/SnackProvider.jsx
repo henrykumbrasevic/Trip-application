@@ -43,7 +43,7 @@ const Snackbar = ({ message, status }) => {
   return (
     <div
       className={`absolute p-8 text-2xl top-0 w-full ${
-        status === "success" ? "bg-green-500" : "bg-red-400"
+        status === "success" ? "bg-green-700" : "bg-red-500"
       }`}
     >
       {message}

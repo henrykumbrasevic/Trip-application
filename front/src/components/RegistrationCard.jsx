@@ -16,7 +16,7 @@ function RegistrationCard({ tripDate, setTrips }) {
 
     if (!response.ok) {
       setLoading(false);
-      showSnackbar("Ups, something went wrong", "error");
+      showSnackbar("Smething went wrong", "error");
       return;
     }
 
@@ -29,7 +29,7 @@ function RegistrationCard({ tripDate, setTrips }) {
     <>
       <div
         key={tripDate.id}
-        className="bg-[#2F4F4F] m-3 p-3 rounded flex justify-around items-center"
+        className="bg-[#DEB887] m-3 p-3 rounded flex justify-around items-center"
       >
         <div>
           <p>{tripDate.date}</p>

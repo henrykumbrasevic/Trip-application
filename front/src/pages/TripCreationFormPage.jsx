@@ -23,7 +23,10 @@ const TripCreationForm = () => {
   } = useForm();
 
   const formSubmitHandler = async (data) => {
+    data.dates = data.dates.split(",").map((date) => date.trim());
+ 
     try {
+      console.log(data);
       await post(data);
       navigate("/");
     } catch (error) {
@@ -136,6 +139,20 @@ const TripCreationForm = () => {
             })}
           />
           <p className="text-red-500">{errors.price?.message}</p>
+          <label
+              htmlFor="first_name"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Date(s)
+            </label>
+          <input
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 max-w-[50vw]"
+            type="text"
+            placeholder="Dates..."
+            {...register("dates", {
+              required: "Please enter the dates",
+            })}
+          />
+          <p>{ errors.dates?.message}</p>
           <p className="text-xs text-red-500 pt-1">*all fields are mandatory</p>
         <button
           type="submit"

@@ -41,29 +41,25 @@ public class TripController {
   public ResponseEntity<?> createTrip(@Valid @RequestBody TripRequestDTO tripRequestDTO) {
     Trip trip = new Trip();
     trip.setName(tripRequestDTO.name());
-    trip.setCategory(TripCategory.valueOf(tripRequestDTO.category()));
+    trip.setCategory(TripCategory.valueOf(tripRequestDTO.category().toUpperCase()));
     trip.setImage(tripRequestDTO.image());
     trip.setDuration(tripRequestDTO.duration());
     trip.setPrice(BigDecimal.valueOf(tripRequestDTO.price()));
     tripService.saveTrip(trip);
-//    ArrayList<TripDate> tripDates = new ArrayList<>();
-//
-//    tripRequestDTO.dates().forEach(date -> {
-//      if (!tripDateService.existsByIdAndDate(trip.getId(), date)) {
-//        TripDate newDate = new TripDate();
-//        newDate.setTrip(trip);
-//        newDate.setDate(date);
-//        tripDateService.saveTripDate(newDate);
-//        tripDates.add(newDate);
-//      } else {
-//        tripDates.add(tripDateService.findDateByIdAndDate(trip.getId(), date));
-//      }
-//    });
-    LocalDate date = LocalDate.parse("2025-03-15");
-    TripDate tripDate = new TripDate(trip, date);
-    trip.setTripDates(List.of(tripDate));
+    ArrayList<TripDate> tripDates = new ArrayList<>();
+    tripRequestDTO.dates().forEach(date -> {
+      if (!tripDateService.existsByIdAndDate(trip.getId(), date)) {
+        TripDate newDate = new TripDate();
+        newDate.setTrip(trip);
+        newDate.setDate(date);
+        tripDateService.saveTripDate(newDate);
+        tripDates.add(newDate);
+      } else {
+        tripDates.add(tripDateService.findDateByIdAndDate(trip.getId(), date));
+      }
+    });
+    trip.setTripDates(tripDates);
     tripService.saveTrip(trip);
-
     return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(trip.getId()).toUri()).body(TripMapper.toTripResponseDTO(trip, BigDecimal.ZERO));
   }
 
