@@ -16,7 +16,7 @@ function App() {
     <>
       <div  className="justify-between h-screen w-screen box-border">
         <NavLinks />
-        <div className="flex-1 w-full">
+        <div className="flex-1 w-full pt-[3rem]">
           <Routes>
             <Route path="/" element={<ItemsPage />} />
             <Route path="/signup" element={<SignUpPage />} />

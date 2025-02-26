@@ -31,7 +31,7 @@ function RegistrationApproval() {
     <>
       <div className="grid grid-cols-4">
         {trips.map((request) => (
-          <div className="bg-green-400 m-3 p-2 flex flex-col">
+          <div className=" m-3 p-2 flex flex-col bg-[#DEB887]">
             <p>Trip name: {request.tripName}</p>
             <p>Date: {request.tripDate}</p>
             <p>Username: {request.username}</p>

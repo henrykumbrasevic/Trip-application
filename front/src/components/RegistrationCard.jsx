@@ -29,7 +29,7 @@ function RegistrationCard({ tripDate, setTrips }) {
     <>
       <div
         key={tripDate.id}
-        className="bg-green-500 m-3 p-3 rounded flex justify-around items-center"
+        className="bg-[#2F4F4F] m-3 p-3 rounded flex justify-around items-center"
       >
         <div>
           <p>{tripDate.date}</p>

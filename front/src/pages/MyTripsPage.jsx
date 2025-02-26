@@ -35,9 +35,9 @@ function MyTripsPage() {
   }, []);
 
   if (loading) 
-    return <p>Loading trip details...</p>;
+    return <p className="pt-5 text-[1.5rem] text-center">Loading trip details...</p>;
   if (error) 
-    return <p>Error: {error}</p>;
+    return <p className="pt-5 text-[1.5rem] text-center">You need to be logged in order to see your booked trips.</p>;
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full">

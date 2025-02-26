@@ -10,7 +10,7 @@ function Card({ entry }) {
     <>
       <div
         key={entry.id}
-        className="m-3 p-2 rounded flex flex-col justify-center items-center bg-[#1a8f70] shadow-2xs"
+        className="m-3 p-2 rounded flex flex-col justify-center items-center bg-[#DEB887] shadow-2xs "
       >
         <img
           src={entry.image}

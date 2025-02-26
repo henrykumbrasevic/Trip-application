@@ -6,8 +6,6 @@ import { useItemContext } from "../context/ItemContext";
 import { firstLetterCapitalizer } from "../helpers/firstLetterCapitalizer";
 
 const TripCreationForm = () => {
-
-
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -24,33 +22,28 @@ const TripCreationForm = () => {
     formState: { errors },
   } = useForm();
 
-
-    const formSubmitHandler = async (data) => {
+  const formSubmitHandler = async (data) => {
     try {
-        console.log(data)
-        console.log(typeof(data.category))
-        await post(data);
-        navigate("/");
-      }
-     catch (error) {
+      await post(data);
+      navigate("/");
+    } catch (error) {
       setError(error.message);
     }
   };
 
   return (
     <>
-    <div className="h-screen">
-      <form
-        className="flex flex-col w-1/2 m-auto"
-        noValidate
-        onSubmit={handleSubmit(formSubmitHandler)}
-      >
-          <h1 className="text-2xl my-2">Trip registration form:</h1>
-        
+      <form className="pt-5 place-items-center " onSubmit={handleSubmit(formSubmitHandler)}>
+        <label
+          htmlFor="first_name"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Name
+        </label>
         <input
-          className="inputs"
           type="text"
-          placeholder="Name..."
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 max-w-[50vw] "
+          placeholder="Trip in Vilnius"
           {...register("name", {
             required: "Please enter the name of the trip.",
             minLength: {
@@ -64,71 +57,96 @@ const TripCreationForm = () => {
           })}
         />
         <p className="text-red-500">{errors.name?.message}</p>
-        <label htmlFor="category">Select category:</label>
+        <label
+              htmlFor="first_name"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Category
+            </label>
         <select
-          className="inputs"
-          id="category"
-          {...register("category", { 
-            required: "Category is required." })}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 max-w-[50vw]"
+            id="category"
+            {...register("category", {
+              required: "Category is required.",
+            })}
+          >
+            <option label=" "></option>
+            {categories.map((category) => {
+              return (
+                <>
+                  <option value={category}>{category}</option>
+                </>
+              );
+            })}
+          </select>
+          <p className="text-red-500">{errors.category?.message}</p>
+          <label
+              htmlFor="first_name"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Image
+            </label>
+          <input
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 max-w-[50vw]"
+            type="text"
+            placeholder="Image URL..."
+            {...register("image", {
+              required: "Please enter URL of the cover.",
+              pattern: {
+                value:
+                  /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
+                message: "Invalid image URL.",
+              },
+            })}
+          />
+          <p className="text-red-500">{errors.image?.message}</p>
+          <label
+              htmlFor="first_name"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Duration
+            </label>
+            <input
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 max-w-[50vw]"
+            type="text"
+            placeholder="1h 30min / 1 day / 10 days / 2 weeks etc.."
+            {...register("duration", {
+              required: "Please enter the duration.",
+            })}
+          />
+          <p className="text-red-500">{errors.duration?.message}</p>
+          <label
+              htmlFor="first_name"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Price
+            </label>
+          <input
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 max-w-[50vw]"
+            type="text"
+            placeholder="100.00"
+            {...register("price", {
+              required: "Please enter the price.",
+              min: {
+                value: 0.01,
+                message: "Price cannot be set to a negative number or 0",
+              },
+              pattern: {
+                value: /^[0-9]*\.[0-9][0-9]$/,
+                message:
+                  "Price must be a number (if decimal - max 2 digits after comma).",
+              },
+            })}
+          />
+          <p className="text-red-500">{errors.price?.message}</p>
+          <p className="text-xs text-red-500 pt-1">*all fields are mandatory</p>
+        <button
+          type="submit"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-5"
         >
-          <option label=" "></option>
-          {categories.map((category) => {
-            return (
-              <>
-                <option value={category}>{category}</option>
-              </>
-            );
-          })}
-        </select>
-        <p className="text-red-500">{errors.category?.message}</p>
-        <input
-          className="inputs"
-          type="text"
-          placeholder="Image URL..."
-          {...register("image", {
-            required: "Please enter URL of the cover.",
-            pattern: {
-              value:
-                /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
-              message: "Invalid image URL.",
-            },
-          })}
-        />
-        <p className="text-red-500">{errors.image?.message}</p>
-        <input
-          className="inputs"
-          type="text"
-          placeholder="Duration..."
-          {...register("duration", {
-            required: "Please enter the duration."
-          })}
-        />
-        <p className="text-red-500">{errors.duration?.message}</p>
-        <input
-          className="inputs"
-          type="text"
-          placeholder="Price..."
-          {...register("price", {
-            required: "Please enter the price.",
-            min: {
-              value: 0.01,
-              message: "Price cannot be set to a negative number or 0",
-            },
-            pattern: {
-              value: /^[0-9]*\.[0-9][0-9]$/,
-              message:
-                "Price must be a number (if decimal - max 2 digits after comma).",
-            },
-          })}
-        />
-        <p className="text-red-500">{errors.price?.message}</p>
-        <p className="text-xs">*all fields are mandatory</p>
-        <input type="submit" className="buttons my-3 w-1/2 self-center" />
+          Submit
+        </button>
       </form>
-
-      {error && <p>{error}</p>}</div>
+      {error && <p>{error}</p>}
     </>
   );
-}
+};
 
 export default TripCreationForm;

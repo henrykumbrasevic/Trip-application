@@ -32,7 +32,7 @@ const NavLinks = () => {
           {user ? (
             <>
               <div className="flex items-center font-bold">
-                <p className="pr-5">You are logged in as {user.username}!</p>
+                <p className="pr-5">You are logged in as {user.username}</p>
                 <Link to="/">
                   <Button buttonType={"navlinks"} onClick={logout}>
                     Log out
