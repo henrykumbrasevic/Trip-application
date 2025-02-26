@@ -1,0 +1,59 @@
+import { Link } from "react-router";
+import { useAuth } from "../context/AuthContext.jsx";
+import Button from "./Button.jsx";
+
+const NavLinks = () => {
+  const { user, logout } = useAuth();
+
+  return (
+    <>
+      <nav className="flex justify-around items-center bg-green-500 text-red-500">
+        <div>
+          <Link to="/">
+            <Button buttonType={"navlinks"}>Home</Button>
+          </Link>
+          {!user?.roles.includes("ROLE_ADMIN") && 
+          <Link to="/my-trips">
+            <Button buttonType={"navlinks"}>My trips</Button>
+          </Link>
+}
+          {user && user.roles.includes("ROLE_ADMIN") && (
+            <>
+              <Link to="/trip-creation-form">
+                <Button buttonType={"navlinks"}>Trip Creation Form</Button>
+              </Link>
+              <Link to="/registration-approval">
+                <Button buttonType={"navlinks"}>Registration approval</Button>
+              </Link>
+            </>
+          )}
+        </div>
+        <div>
+          {user ? (
+            <>
+              <div className="flex items-center font-bold">
+                <p>welcome {user.username}!</p>
+                <Link to="/">
+                  <Button buttonType={"navlinks"} onClick={logout}>
+                    Log out
+                  </Button>
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div>
+              <Link to="/login">
+                <Button buttonType={"navlinks"}>Log In</Button>
+              </Link>
+              <Link to="/signup">
+                <Button buttonType={"navlinks"}>Sign Up</Button>
+              </Link>
+            </div>
+          )}
+        </div>
+      </nav>
+    </>
+  );
+};
+
+export default NavLinks;
